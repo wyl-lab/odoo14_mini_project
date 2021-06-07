@@ -37,7 +37,15 @@ class Students(models.Model):
     height_size_min = fields.Integer(string='Size', default=130)
     height_size_max = fields.Integer(default=180)
     description = fields.Text(string='备注')
-    state = fields.Selection([('selected', 'Selected'), ('finished', 'Finished'), ('unselected', 'Unselected'), ('error', 'Error')], string='选课状态', required=True, default='unselected')
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('selected', 'Selected'),
+        ('finished', 'Finished'),
+        ('unselected', 'Unselected'),
+        ('error', 'Error') ],
+        string='选课状态',
+        required=True,
+        default='unselected' )
     c_ids = fields.Many2many(
         'laboratory.courses', 'rel_students_courses',
         'student_id', 'course_id', string="所关联的课程号",
@@ -57,6 +65,16 @@ class Students(models.Model):
         elif self.height_size_max >= 210:
             self.height_size_max = 210
 
+    # @api.onchange('c_ids')
+    # def _onchange_cids(self):
+    #     if env(['c_ids']) is not None:
+    #         self.state = 'selected'
+    #     else
+    #         self.state = 'unselected'
+
+    def move_action(self):
+        return "hello"
+
 
 class Courses(models.Model):
     _name = 'laboratory.courses'
@@ -66,7 +84,13 @@ class Courses(models.Model):
     courseName = fields.Char(required=True, string='课程名')
     rel_teacher = fields.Char(required=True, string='任课老师')
     description = fields.Text(string='备注')
-    state = fields.Selection([('draft', 'Draft'), ('done', 'Done'), ('error', 'Error')], string='状态标识', required=True, default='draft')
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('done', 'Done'),
+        ('error', 'Error') ],
+        string='状态标识',
+        required=True,
+        default='draft' )
     # t_ids =
     s_ids = fields.Many2many('laboratory.students', 'rel_students_courses', 'course_id', 'student_id', string="所关联的学生号", help="Analyze your course_information's correctness!")
 

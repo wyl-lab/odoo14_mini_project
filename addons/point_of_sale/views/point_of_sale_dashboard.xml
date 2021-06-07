@@ -13,7 +13,7 @@
         </field>
     </record>
 
-    <record id="action_pos_order_filtered" model="ir.actions.act_window">
+    <record id="action_pos_order_filtered" mo del="ir.actions.act_window">
         <field name="name">Orders</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">pos.order</field>

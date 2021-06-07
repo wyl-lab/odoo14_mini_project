@@ -39,7 +39,8 @@
                 <field name="sName"/>
                 <field name="sSex"/>
                 <field name="sRegistDate"/>
-                <field name="state" decoration-info="state == 'selected'" decoration-success="state == 'finished'" decoration-warning="state == 'unselected'" decoration-danger="state == 'error'" widget="badge" optional="show"/>
+<!--                <field name="state"/>-->
+                <field name="state" decoration-info="state == 'draft'" decoration-success="state == 'finished'" decoration-warning="state == 'unselected'" decoration-danger="state == 'error'" widget="badge" optional="show"/>
                 <field name="description"/>
                 <field name="c_ids"/>
             </tree>
@@ -52,7 +53,8 @@
             <form>
             <!--header:    combined with sheet, provides a full-width location above the sheet itself, generally used to display workflow buttons and status widgets.       -->
                 <head>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,done,error" invisible="context.get('is_modal')"/>
+                    <button name="move_action" string="move" type="object" class="btn-primary o_button_generate_leads"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,selected,finished,unselected,error" invisible="context.get('is_modal')"/>
                 </head>
                 <sheet>
                     <group>
@@ -63,16 +65,16 @@
                             <field name="sRegistDate" default_period="last_year" string="入校时间"/>
                         </group>
                         <group>
-                            <field name="filter_on_height" attrs="{'readonly': [('state', '!=', 'draft')]}" options="{'horizontal': true}"/>
+                            <field name="filter_on_height" attrs="{'readonly': [('state', '!=', 'unselected')]}" options="{'horizontal': true}"/>
                             <label for="height_size_min" attrs="{'invisible': [('filter_on_height', '=', False)]}"/>
                             <div attrs="{'invisible': [('filter_on_height', '=', False)]}">
                                 From
-                                <field name="height_size_min" class="oe_inline col-sm-3" attrs="{'required': [('filter_on_height', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="height_size_min" class="oe_inline col-sm-3" attrs="{'required': [('filter_on_height', '=', True)], 'readonly': [('state', '!=', 'unselected')]}"/>
                                 to
-                                <field name="height_size_max" class="oe_inline col-sm-3" attrs="{'required': [('filter_on_height', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="height_size_max" class="oe_inline col-sm-3" attrs="{'required': [('filter_on_height', '=', True)], 'readonly': [('state', '!=', 'unselected')]}"/>
                                 cm
                             </div>
-                            <field name="c_ids" string="已选课程" widget="many2many_tags" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="c_ids" string="已选课程" widget="many2many_tags" attrs="{'readonly': [('state', '!=', 'unselected')]}"/>
 <!--                            <field name="description"/>-->
                         </group>
                     </group>
@@ -142,7 +144,7 @@
                         <page string="Description">
                             <field name="description"/>
                         </page>
-                        <page string="Description">
+                        <page string="任课老师">
                             <field name="rel_teacher"/>
                         </page>
                     </notebook>
