@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+# set server timezone in UTC before time module imported
+__import__('os').environ['TZ'] = 'UTC'
+import odoo
+# import ipdb; ipdb.set_trace()
+
+
+def copy(self, default=None):
+    import ipdb;
+    ipdb.set_trace()
+    self.ensure_one()
+    chosen_name = default.get('name') if default else ''
+    new_name = chosen_name or _('%s (copy)') % self.name
+    default = dict(default or {}, name=new_name)
+    return super(Partner, self).copy(default)
+
+
+if __name__ == "__main__":
+    # copy()
+    odoo.cli.main()

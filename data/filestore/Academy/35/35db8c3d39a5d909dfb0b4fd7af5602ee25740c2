@@ -1,0 +1,66 @@
+
+/* /web/static/lib/bootstrap/scss/_functions.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /web/static/lib/bootstrap/scss/_mixins.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /web/static/src/scss/bs_mixins_overrides.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /web/static/src/scss/utils.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /web/static/src/scss/primary_variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /web_editor/static/src/scss/web_editor.variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /mail/static/src/scss/variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /portal/static/src/scss/primary_variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /website/static/src/scss/primary_variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /website/static/src/scss/options/user_values.custom.web.assets_common.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /website/static/src/scss/options/colors/user_color_palette.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /website/static/src/scss/options/colors/user_theme_color_palette.custom.web.assets_common.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /website/static/src/snippets/s_badge/000_variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /website/static/src/snippets/s_product_list/000_variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /website_sale/static/src/scss/primary_variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /account/static/src/scss/variables.scss defined in bundle 'website.assets_editor' */
+ @keyframes animate-red{0%{color: red;}100%{color: inherit;}}.animate{animation: animate-red 1s ease;}
+
+/* /website/static/src/scss/secondary_variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /web_editor/static/src/scss/secondary_variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /web/static/src/scss/secondary_variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /web/static/lib/bootstrap/scss/_variables.scss defined in bundle 'website.assets_editor' */
+ 
+
+/* /website/static/src/scss/website.editor.ui.scss defined in bundle 'website.assets_editor' */
+ .o_homepage_editor_welcome_message{padding-top: 128px; padding-bottom: 128px; font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";}.o_switch{display: -webkit-box; display: -webkit-flex; display: flex; align-items: center; font-weight: normal; cursor: pointer;}.o_switch > input{display: none;}.o_switch > input + span{background-color: #F7F7F7; box-shadow: inset 0 0 0px 1px #dedddd; border-radius: 100rem; height: 2ex; width: 3.6ex; margin-right: 0.5em; display: inline-block; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);}.o_switch > input + span:after{content: ""; background: white; display: block; width: 1.8ex; height: 1.8ex; margin-top: 0.1ex; margin-left: 0.1ex; border-radius: 100rem; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 1px 1px #9e9e9e, inset 0 0 0 1px white;}.o_switch > input:checked + span{box-shadow: none; background: #40ad67;}.o_switch > input:checked + span:after{margin-left: 1.7ex;}.o_switch.o_switch_danger > input:not(:checked) + span{box-shadow: none; background: #e6586c;}.o_new_content_loader_container{background-color: rgba(48, 48, 48, 0.9); pointer-events: all; font-size: 3.5rem; justify-content: center; z-index: 1049;}.o_new_content_loader{position: relative; display: inline-block; width: 400px; height: 220px; background-image: url("/website/static/src/img/theme_loader.gif"); background-size: cover; border-radius: 6px;}
+
+/* /website_form/static/src/scss/wysiwyg_snippets.scss defined in bundle 'website.assets_editor' */
+ #oe_snippets > .o_we_customize_panel we-customizeblock-option we-list we-title, #oe_snippets > .o_we_customize_panel we-customizeblock-option we-list we-button{margin-top: 8px;}#oe_snippets > .o_we_customize_panel we-customizeblock-option we-list .oe_we_table_wraper{margin-top: 8px; max-height: 200px; overflow-y: auto;}#oe_snippets > .o_we_customize_panel we-customizeblock-option we-list .oe_we_table_wraper table{table-layout: fixed; width: 100%;}#oe_snippets > .o_we_customize_panel we-customizeblock-option we-list .oe_we_table_wraper table input{width: 100%; border: 1px solid #000000; border-radius: 2px; padding: 0 6px; background-color: #2b2b33; color: inherit; font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}#oe_snippets > .o_we_customize_panel we-customizeblock-option we-list .oe_we_table_wraper table tr{border: 1px solid rgba(255, 255, 255, 0.1); border-left: none; border-right: none;}#oe_snippets > .o_we_customize_panel we-customizeblock-option we-list .oe_we_table_wraper table td:first-child, #oe_snippets > .o_we_customize_panel we-customizeblock-option we-list .oe_we_table_wraper table td:last-child{width: 28px;}

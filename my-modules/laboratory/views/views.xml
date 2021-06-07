@@ -1,0 +1,210 @@
+<odoo>
+  <data>
+    <!-- <record id="crm_lost_reason_view_form" model="ir.ui.view">
+        <field name="name">crm.lost.reason.form</field>
+        <field name="model">crm.lost.reason</field>
+        <field name="arch" type="xml">
+            <form string="Lost Reason">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_lost_leads" type="object"
+                            class="oe_stat_button" icon="fa-star">
+                            <div class="o_stat_info">
+                                <field name="leads_count" class="o_stat_value"/>
+                                <span class="o_stat_text"> Leads</span>
+                            </div>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name"/>
+                        </div>
+                        <h1 class="mb32">
+                            <field name="sName" class="mb16"/>
+                        </h1>
+                        <field name="active" invisible="1"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>-->
+
+    <record model="ir.ui.view" id="laboratory.student_tree">
+        <field name="name">Students</field>
+        <field name="model">laboratory.students</field>
+        <field name="arch" type="xml">
+        <tree>
+                <field name="sID"/>
+                <field name="sName"/>
+                <field name="sSex"/>
+                <field name="sRegistDate"/>
+                <field name="state" decoration-info="state == 'selected'" decoration-success="state == 'finished'" decoration-warning="state == 'unselected'" decoration-danger="state == 'error'" widget="badge" optional="show"/>
+                <field name="description"/>
+                <field name="c_ids"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="laboratory.student_form">
+        <field name="name">Students</field>
+        <field name="model">laboratory.students</field>
+        <field name="arch" type="xml">
+            <form>
+            <!--header:    combined with sheet, provides a full-width location above the sheet itself, generally used to display workflow buttons and status widgets.       -->
+                <head>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,error" invisible="context.get('is_modal')"/>
+                </head>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="sID"/>
+                            <field name="sName"/>
+                            <field name="sSex"/>
+                            <field name="sRegistDate" default_period="last_year" string="入校时间"/>
+                        </group>
+                        <group>
+                            <field name="filter_on_height" attrs="{'readonly': [('state', '!=', 'draft')]}" options="{'horizontal': true}"/>
+                            <label for="height_size_min" attrs="{'invisible': [('filter_on_height', '=', False)]}"/>
+                            <div attrs="{'invisible': [('filter_on_height', '=', False)]}">
+                                From
+                                <field name="height_size_min" class="oe_inline col-sm-3" attrs="{'required': [('filter_on_height', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/>
+                                to
+                                <field name="height_size_max" class="oe_inline col-sm-3" attrs="{'required': [('filter_on_height', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/>
+                                cm
+                            </div>
+                            <field name="c_ids" string="已选课程" widget="many2many_tags" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+<!--                            <field name="description"/>-->
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+             </form>
+        </field>
+    </record>
+
+    <!--<record model="ir.actions.act_window" id="laboratory.action_students">
+      <field name="name">Laboratory Students</field>
+      <field name="res_model">laboratory.students</field>
+      <field name="view_mode">tree,form</field>
+    </record>-->
+    <record model="ir.actions.server" id="laboratory.action_server_students">
+      <field name="name">students server</field>
+      <field name="model_id" ref="laboratory.model_laboratory_students"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "name": "Laboratory Students",
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+
+    <!--<record model="ir.actions.act_window" id="laboratory.action_courses">
+      <field name="name">Laboratory Courses</field>
+      <field name="res_model">laboratory.courses</field>
+      <field name="view_mode">tree,form</field>
+    </record>-->
+    <record model="ir.ui.view" id="laboratory.course_tree">
+        <field name="name">Courses</field>
+        <field name="model">laboratory.courses</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="courseID"/>
+                <field name="courseName"/>
+                <field name="description"/>
+                <field name="state" readonly="1" decoration-info="state == 'draft'" decoration-success="state == 'done'" decoration-danger="state == 'error'" widget="badge"/>
+                <field name="s_ids"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="laboratory.course_form">
+        <field name="name">Courses</field>
+        <field name="model">laboratory.courses</field>
+        <field name="arch" type="xml">
+            <form>
+                <head>
+ <!--header:    combined with sheet, provides a full-width location above the sheet itself, generally used to display workflow buttons and status widgets.       -->
+                </head>
+                <sheet>
+                    <group>
+                        <field name="courseID"/>
+                        <field name="courseName"/>
+                        <field name="state" readonly="1" decoration-info="state == 'draft'" decoration-success="state == 'done'" decoration-danger="state == 'error'" widget="badge"/>
+                        <field name="s_ids"/>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                        <page string="Description">
+                            <field name="rel_teacher"/>
+                        </page>
+                    </notebook>
+                </sheet>
+             </form>
+        </field>
+    </record>
+    <record model="ir.actions.server" id="laboratory.action_server_courses">
+      <field name="name">course server</field>
+      <field name="model_id" ref="laboratory.model_laboratory_courses"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "name": "Laboratory Courses",
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+
+      <!--    <record model="ir.actions.server" id="print_instance">
+      <field name="name">Res Partner Server Action</field>
+      <field name="model_id" ref="model_res_partner"/>
+      <field name="state">code</field>
+      <field name="code">
+          raise Warning(record.name)
+      </field>
+    </record>-->
+
+<!--    <record model="ir.ui.view" id="laboratory.test_model_action_window">
+      <field name="name">TestAction window</field>
+     <field name="view_mode">tree,form</field>
+      <field name="arch" type="xml">
+          <form>
+            <header>
+                <button name="action_do_something" type="object" string="Do Something"/>
+            </header>
+            <sheet>
+                <field name="sName"/>
+            </sheet>
+          </form>
+          <tree string="Tests">
+              <field name="cName"/>
+              <field name="description"/>
+          </tree>
+      </field>
+    </record>-->
+
+    <!-- Top menu item -->
+    <menuitem name="Laboratory" id="laboratory.menu_root"/>
+    <!-- menu categories -->
+    <menuitem name="Management" id="laboratory.menu_1" parent="laboratory.menu_root"/>
+    <menuitem name="Menu2" id="laboratory.menu_2" parent="laboratory.menu_root"/>
+
+    <!-- actions -->
+    <menuitem name="Students" id="laboratory.menu_1_list" parent="laboratory.menu_1"
+              action="laboratory.action_server_students"/>
+    <menuitem name="Courses" id="laboratory" parent="laboratory.menu_1"
+              action="laboratory.action_server_courses"/>
+
+    <menuitem name="Courses" id="test1" parent="laboratory.menu_2"
+              action="laboratory.action_server_courses"/>
+  </data>
+</odoo>

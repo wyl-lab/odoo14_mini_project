@@ -1,0 +1,54 @@
+<odoo>
+    <data noupdate="0">
+        <record id="s1" model="laboratory.students">
+            <field name="sID">2017030030</field>
+            <field name="sName">wyl</field>
+            <field name="description">2017.9入學</field>
+        </record>
+
+        <record id="c1" model="laboratory.courses">
+            <field name="courseID">1001</field>
+            <field name="courseName">Java开发</field>
+            <field name="description">16课时</field>
+        </record>
+
+        <record id="c2" model="laboratory.courses">
+            <field name="courseID">1002</field>
+            <field name="courseName">Python开发</field>
+            <field name="description">19课时</field>
+        </record>
+
+        <!--<record id="c1" model="laboratory.courses">
+            <field name="tID">210</field>
+            <field name="tName">王老师</field>
+            <field name="description">17年任教</field>
+        </record>-->
+
+
+
+          <!--<record id="object0" model="laboratory.laboratory">
+            <field name="name">Object 0</field>
+            <field name="value">0</field>
+          </record>
+
+          <record id="object1" model="laboratory.laboratory">
+            <field name="name">Object 1</field>
+            <field name="value">10</field>
+          </record>
+
+          <record id="object2" model="laboratory.laboratory">
+            <field name="name">Object 2</field>
+            <field name="value">20</field>
+          </record>
+
+          <record id="object3" model="laboratory.laboratory">
+            <field name="name">Object 3</field>
+            <field name="value">30</field>
+          </record>
+
+          <record id="object4" model="laboratory.laboratory">
+            <field name="name">Object 4</field>
+            <field name="value">40</field>
+          </record>-->
+    </data>
+</odoo>

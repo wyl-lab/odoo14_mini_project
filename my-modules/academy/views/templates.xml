@@ -1,0 +1,90 @@
+<odoo>
+    <data>
+        <template id="product_item_hide_no_price" inherit_id="website_sale.products_item">
+            <xpath expr="//div[hasclass('product_price')]" position="attributes">
+                <attribute name="t-if">product.price &gt; 0</attribute>
+            </xpath>
+        </template>
+        <record id="website_sale.products_categories" model="ir.ui.view">
+            <field name="active" eval="True"/>
+        </record>
+
+
+        <template id="biography">
+            <t t-call="website.layout">
+                <t t-set="title">Biography</t>
+                <div class="oe_structure"/>
+                <div class="oe_structure">
+                    <div class="container">
+                        href:<a t-attf-href="/academy/{{ slug(person) }}">
+                        id: <t t-esc="person.id"/>
+                        name: <t t-esc="person.name"/>
+                        uid: <t t-esc="person.create_uid"/><br/>
+                            </a>
+
+                        <h3 t-field="person.name"/>
+                        <p>Last modified: <i t-field="person.write_date" t-options="{'format':'long'}"/></p>
+                        <p>Last modified: <i t-field="person.write_date" t-options='{"widget": "relative"}'/></p>
+                        <div t-field="person.biography"/>
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+        <template id="index">
+             <title>Academy_index</title>
+             <t t-call="website.layout">
+                <div class="oe_structure">
+                <div class="container">
+                    <!--loop-->
+                     <t t-foreach="teachers" t-as="teacher">
+                        <p>
+                        href:<a t-attf-href="/academy/{{ slug(teacher) }}">
+                        id: <t t-esc="teacher.id"/>
+                        name: <t t-esc="teacher.name"/>
+                        uid: <t t-esc="teacher.create_uid"/><br/>
+                            </a>
+                        </p>
+                    </t>
+                </div>
+                </div>
+            </t>
+        </template>
+
+
+         <template id="layout">
+             <title>Academy_layout</title>
+             <!--loop-->
+             <t t-foreach="teachers" t-as="teacher">
+                <p><t t-esc="teacher"/></p>
+            </t>
+
+          <ul>
+            <li t-foreach="teachers" t-as="teacher">
+                <t t-esc="teacher"/>
+            </li>
+          </ul>
+        </template>
+<!--
+        <template id="listing">
+          <ul>
+            <li t-foreach="objects" t-as="object">
+              <a t-attf-href="#{ root }/objects/#{ object.id }">
+                <t t-esc="object.display_name"/>
+              </a>
+            </li>
+          </ul>
+        </template>
+        <template id="object">
+          <h1><t t-esc="object.display_name"/></h1>
+          <dl>
+            <t t-foreach="object._fields" t-as="field">
+              <dt><t t-esc="field"/></dt>
+              <dd><t t-esc="object[field]"/></dd>
+            </t>
+          </dl>
+        </template>
+-->
+    </data>
+</odoo>
