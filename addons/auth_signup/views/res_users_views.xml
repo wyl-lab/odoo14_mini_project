@@ -47,6 +47,7 @@
             </field>
         </record>
 
+    
         <record id="action_send_password_reset_instructions" model="ir.actions.server">
             <field name="name">Send Password Reset Instructions</field>
             <field name="model_id" ref="base.model_res_users"/>

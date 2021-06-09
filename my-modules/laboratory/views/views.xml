@@ -29,17 +29,40 @@
             </form>
         </field>
     </record>-->
-
+    <!--<record model="ir.actions.act_window" id="laboratory.action_students">
+      <field name="name">Laboratory Students</field>
+      <field name="res_model">laboratory.students</field>
+      <field name="view_mode">tree,form</field>
+    </record>-->
+    <record model="ir.actions.server" id="laboratory.action_server_students">
+        <field name="name">students server</field>
+        <field name="model_id" ref="laboratory.model_laboratory_students"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = {
+            "name": "Laboratory Students",
+            "type": "ir.actions.act_window",
+            "view_mode": "tree,form,kanban,list,graph",
+            "res_model": model._name,
+        }
+        </field>
+    </record>
     <record model="ir.ui.view" id="laboratory.student_tree">
         <field name="name">Students</field>
         <field name="model">laboratory.students</field>
         <field name="arch" type="xml">
-        <tree>
+            <!--<xpath expr="//tree" position="attributes">
+                <attribute name="decoration-info">stu_status == 'entrance'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='stu_status']" position="after">
+                <field name="stu_status" invisible="1"/>
+            </xpath>-->
+            <tree>
                 <field name="sID"/>
                 <field name="sName"/>
                 <field name="sSex"/>
                 <field name="sRegistDate"/>
-<!--                <field name="state"/>-->
+                <field name="stu_status" widget="statusbar" statusbar_visible="entrance,study,graduate" optional="show"/>
                 <field name="state" decoration-info="state == 'draft'" decoration-success="state == 'finished'" decoration-warning="state == 'unselected'" decoration-danger="state == 'error'" widget="badge" optional="show"/>
                 <field name="description"/>
                 <field name="c_ids"/>
@@ -50,21 +73,31 @@
         <field name="name">Students</field>
         <field name="model">laboratory.students</field>
         <field name="arch" type="xml">
-            <form>
+            <form string="Students" modifiers="{}">
             <!--header:    combined with sheet, provides a full-width location above the sheet itself, generally used to display workflow buttons and status widgets.       -->
-                <head>
-                    <button name="move_action" string="move" type="object" class="btn-primary o_button_generate_leads"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,selected,finished,unselected,error" invisible="context.get('is_modal')"/>
-                </head>
-                <sheet>
+                <header modifiers="{}">
+                    <button string="Set to Entrance" name="action_stu_status_entrance" type="object" class="btn-primary" options="{}"
+                            attrs="{'invisible': [('stu_status', '=', 'entrance')]}" modifiers="{'invisible':[['stu_status','=','entrance']]}"/>
+                    <button string="study" name="action_stu_status_study" type="object" class="btn-primary"  options="{}"
+                            attrs="{'invisible': [('stu_status', '=', 'study')]}" modifiers="{'invisible':[['stu_status','=','study']]}"/>
+                    <button string="graduate" name="action_stu_status_graduate" class="btn-primary" type="object" context="{'create_user': 1}"
+                            attrs="{'invisible': [('stu_status', '=', 'graduate')]}" modifiers="{'invisible':[['stu_status','=','graduate']]}"/>
+
+                    <field name="state"/>
+                    <field name="stu_status" widget="statusbar" statusbar_visible="entrance,study,graduate" modifiers="{'readonly':true}" id="status"/>
+                </header>
+                <sheet modifiers="{}">
                     <group>
                         <group>
                             <field name="sID"/>
                             <field name="sName"/>
                             <field name="sSex"/>
                             <field name="sRegistDate" default_period="last_year" string="入校时间"/>
+                            <button name="move_action" string="move_action" type="object" class="btn-primary o_button_generate_leads"/>
                         </group>
                         <group>
+                            <field name="stu_status" string="阶段状态"/>
+                            <field name="state" string="选课状态"/>
                             <field name="filter_on_height" attrs="{'readonly': [('state', '!=', 'unselected')]}" options="{'horizontal': true}"/>
                             <label for="height_size_min" attrs="{'invisible': [('filter_on_height', '=', False)]}"/>
                             <div attrs="{'invisible': [('filter_on_height', '=', False)]}">
@@ -74,7 +107,7 @@
                                 <field name="height_size_max" class="oe_inline col-sm-3" attrs="{'required': [('filter_on_height', '=', True)], 'readonly': [('state', '!=', 'unselected')]}"/>
                                 cm
                             </div>
-                            <field name="c_ids" string="已选课程" widget="many2many_tags" attrs="{'readonly': [('state', '!=', 'unselected')]}"/>
+                            <field name="c_ids" string="已选课程" widget="many2many_tags"/>
 <!--                            <field name="description"/>-->
                         </group>
                     </group>
@@ -88,25 +121,21 @@
         </field>
     </record>
 
-    <!--<record model="ir.actions.act_window" id="laboratory.action_students">
-      <field name="name">Laboratory Students</field>
-      <field name="res_model">laboratory.students</field>
-      <field name="view_mode">tree,form</field>
-    </record>-->
-    <record model="ir.actions.server" id="laboratory.action_server_students">
-      <field name="name">students server</field>
-      <field name="model_id" ref="laboratory.model_laboratory_students"/>
+
+
+    <record model="ir.actions.server" id="laboratory.action_server_courses">
+      <field name="name">course server</field>
+      <field name="model_id" ref="laboratory.model_laboratory_courses"/>
       <field name="state">code</field>
       <field name="code">
         action = {
-          "name": "Laboratory Students",
+          "name": "Laboratory Courses",
           "type": "ir.actions.act_window",
           "view_mode": "tree,form",
           "res_model": model._name,
         }
       </field>
     </record>
-
     <!--<record model="ir.actions.act_window" id="laboratory.action_courses">
       <field name="name">Laboratory Courses</field>
       <field name="res_model">laboratory.courses</field>
@@ -120,8 +149,9 @@
                 <field name="courseID"/>
                 <field name="courseName"/>
                 <field name="description"/>
-                <field name="state" readonly="1" decoration-info="state == 'draft'" decoration-success="state == 'done'" decoration-danger="state == 'error'" widget="badge"/>
+                <field name="state" readonly="1" decoration-info="state == 'open'" decoration-success="state == 'done'" decoration-danger="state == 'error'" widget="badge"/>
                 <field name="s_ids"/>
+                <button name="click_action" string="click_action" type="object" class="btn-primary o_button_generate_leads"/>
             </tree>
         </field>
     </record>
@@ -131,13 +161,13 @@
         <field name="arch" type="xml">
             <form>
                 <head>
- <!--header:    combined with sheet, provides a full-width location above the sheet itself, generally used to display workflow buttons and status widgets.       -->
+                    <field name="state" widget="statusbar" statusbar_visible="apply,open,done,close,error" invisible="context.get('is_modal')"/>
                 </head>
                 <sheet>
                     <group>
                         <field name="courseID"/>
                         <field name="courseName"/>
-                        <field name="state" readonly="1" decoration-info="state == 'draft'" decoration-success="state == 'done'" decoration-danger="state == 'error'" widget="badge"/>
+                        <field name="state" string="选课状态"/>
                         <field name="s_ids"/>
                     </group>
                     <notebook>
@@ -151,19 +181,6 @@
                 </sheet>
              </form>
         </field>
-    </record>
-    <record model="ir.actions.server" id="laboratory.action_server_courses">
-      <field name="name">course server</field>
-      <field name="model_id" ref="laboratory.model_laboratory_courses"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "name": "Laboratory Courses",
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
     </record>
 
       <!--    <record model="ir.actions.server" id="print_instance">

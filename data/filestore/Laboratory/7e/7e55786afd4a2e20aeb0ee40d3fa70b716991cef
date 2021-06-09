@@ -38,7 +38,7 @@ var rendered=fuzzy.match(pattern,str,opts);if(rendered!=null){prev[prev.length]=
 return prev;},[]).sort(function(a,b){var compare=b.score-a.score;if(compare)return compare;return a.index-b.index;});};}());;
 
 /* <inline asset> defined in bundle 'web.assets_backend' */
-odoo._modules=["base","web","base_setup","bus","web_tour","mail","sales_team","product","web_editor","http_routing","auth_signup","portal","resource","digest","account","payment","utm","sale","sale_management","calendar","contacts","crm","website","website_payment","website_mail","google_recaptcha","website_form","rating","portal_rating","website_sale","website_crm","auth_totp","auth_totp_portal","base_import","crm_iap_lead","iap","l10n_cn","mail_bot","partner_autocomplete","payment_transfer","sms","snailmail","snailmail_account","web_kanban_gauge","web_unsplash","website_sale_management","theme_default"];;
+odoo._modules=["base","web","base_setup","bus","web_tour","mail","sales_team","product","web_editor","http_routing","auth_signup","portal","resource","digest","account","payment","utm","sale","sale_management","calendar","contacts","crm","website","website_payment","website_mail","google_recaptcha","website_form","rating","portal_rating","website_sale","laboratory","website_crm","auth_totp","auth_totp_portal","base_import","crm_iap_lead","iap","l10n_cn","mail_bot","partner_autocomplete","payment_transfer","sms","snailmail","snailmail_account","web_kanban_gauge","web_unsplash","website_sale_management","theme_default"];;
 
 /* /web/static/lib/py.js/lib/py.js defined in bundle 'web.assets_backend' */
 var py={};(function(py){var create=function(o,props){function F(){}
