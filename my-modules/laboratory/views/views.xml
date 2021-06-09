@@ -62,10 +62,10 @@
                 <field name="sName"/>
                 <field name="sSex"/>
                 <field name="sRegistDate"/>
-                <field name="stu_status" widget="statusbar" statusbar_visible="entrance,study,graduate" optional="show"/>
-                <field name="state" decoration-info="state == 'draft'" decoration-success="state == 'finished'" decoration-warning="state == 'unselected'" decoration-danger="state == 'error'" widget="badge" optional="show"/>
+                <field name="stu_status" widget="statusbar" statusbar_visible="entrance,study,graduate"/>
+                <field name="state" widget="badge" optional="show" decoration-info="state == 'apply'" decoration-success="state == 'finished'" decoration-warning="state == 'unselected'" decoration-danger="state == 'error'"/>
+                <field name="c_ids" widget="many2many_tags"/>
                 <field name="description"/>
-                <field name="c_ids"/>
             </tree>
         </field>
     </record>
@@ -83,8 +83,8 @@
                     <button string="graduate" name="action_stu_status_graduate" class="btn-primary" type="object" context="{'create_user': 1}"
                             attrs="{'invisible': [('stu_status', '=', 'graduate')]}" modifiers="{'invisible':[['stu_status','=','graduate']]}"/>
 
-                    <field name="state"/>
-                    <field name="stu_status" widget="statusbar" statusbar_visible="entrance,study,graduate" modifiers="{'readonly':true}" id="status"/>
+                    <field name="state" invisible="1"/>
+                    <field name="stu_status" widget="statusbar" statusbar_visible="entrance,study,graduate" modifiers="{'readonly':true}"/>
                 </header>
                 <sheet modifiers="{}">
                     <group>
@@ -93,22 +93,22 @@
                             <field name="sName"/>
                             <field name="sSex"/>
                             <field name="sRegistDate" default_period="last_year" string="入校时间"/>
-                            <button name="move_action" string="move_action" type="object" class="btn-primary o_button_generate_leads"/>
+                            <button name="action_new_course" string="move_course" type="object" class="btn-primary o_button_generate_leads"/>
                         </group>
                         <group>
-                            <field name="stu_status" string="阶段状态"/>
-                            <field name="state" string="选课状态"/>
-                            <field name="filter_on_height" attrs="{'readonly': [('state', '!=', 'unselected')]}" options="{'horizontal': true}"/>
+<!--                            <field name="state" widget="badge" optional="show" decoration-info="state == 'apply'" decoration-success="state == 'finished'" decoration-warning="state == 'unselected'" decoration-danger="state == 'error'"/>-->
+<!--                            <field name="stu_status" widget="statusbar" statusbar_visible="entrance,study,graduate" modifiers="{'readonly':true}"/>-->
+                            <field name="state"/>
+                            <field name="filter_on_height" options="{'horizontal': true}"/>
                             <label for="height_size_min" attrs="{'invisible': [('filter_on_height', '=', False)]}"/>
                             <div attrs="{'invisible': [('filter_on_height', '=', False)]}">
                                 From
-                                <field name="height_size_min" class="oe_inline col-sm-3" attrs="{'required': [('filter_on_height', '=', True)], 'readonly': [('state', '!=', 'unselected')]}"/>
+                                <field name="height_size_min" class="oe_inline col-sm-3" attrs="{'required': [('filter_on_height', '=', True)],}"/>
                                 to
-                                <field name="height_size_max" class="oe_inline col-sm-3" attrs="{'required': [('filter_on_height', '=', True)], 'readonly': [('state', '!=', 'unselected')]}"/>
+                                <field name="height_size_max" class="oe_inline col-sm-3" attrs="{'required': [('filter_on_height', '=', True)],}"/>
                                 cm
                             </div>
-                            <field name="c_ids" string="已选课程" widget="many2many_tags"/>
-<!--                            <field name="description"/>-->
+                            <field name="c_ids" widget="many2many_tags"/>
                         </group>
                     </group>
                     <notebook>
@@ -131,7 +131,7 @@
         action = {
           "name": "Laboratory Courses",
           "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
+          "view_mode": "tree,form,graph,kanban",
           "res_model": model._name,
         }
       </field>
@@ -148,10 +148,11 @@
             <tree>
                 <field name="courseID"/>
                 <field name="courseName"/>
+                <field name="rel_teacher"/>
                 <field name="description"/>
                 <field name="state" readonly="1" decoration-info="state == 'open'" decoration-success="state == 'done'" decoration-danger="state == 'error'" widget="badge"/>
                 <field name="s_ids"/>
-                <button name="click_action" string="click_action" type="object" class="btn-primary o_button_generate_leads"/>
+                <button name="action_new_stu" string="move_stu" type="object" class="btn-primary o_button_generate_leads"/>
             </tree>
         </field>
     </record>
@@ -160,14 +161,24 @@
         <field name="model">laboratory.courses</field>
         <field name="arch" type="xml">
             <form>
-                <head>
-                    <field name="state" widget="statusbar" statusbar_visible="apply,open,done,close,error" invisible="context.get('is_modal')"/>
-                </head>
+                <header>
+                     <button string="apply" name="action_state_apply" type="object" class="btn-primary" options="{}"
+                            attrs="{'invisible': [('state', '=', 'apply')]}" modifiers="{'invisible':[['state','=','apply']]}"/>
+                    <button string="open" name="action_state_open" type="object" class="btn-primary"  options="{}"
+                            attrs="{'invisible': [('state', '=', 'open')]}" modifiers="{'invisible':[['state','=','open']]}"/>
+                    <button string="done" name="action_state_done" class="btn-primary" type="object"
+                            attrs="{'invisible': [('state', '=', 'done')]}" modifiers="{'invisible':[['state','=','done']]}"/>
+                    <button string="close" name="action_state_close" class="btn-primary" type="object"
+                            attrs="{'invisible': [('state', '=', 'close')]}" modifiers="{'invisible':[['state','=','close']]}"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="courseID"/>
                         <field name="courseName"/>
-                        <field name="state" string="选课状态"/>
+                        <field name="rel_teacher"/>
+<!--                        <field name="state" string="选课状态"/>-->
                         <field name="s_ids"/>
                     </group>
                     <notebook>

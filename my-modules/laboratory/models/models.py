@@ -38,26 +38,34 @@ class Students(models.Model):
     height_size_max = fields.Integer(default=180)
     description = fields.Text(string='备注')
     stu_status = fields.Selection(string='所处阶段', required=True, default='entrance',
-        selection=[('entrance', 'Entrance'), ('study', 'Study'), ('graduate', 'Graduate'),
-        ('cancel', 'Cancelled'), ], )
-    state = fields.Selection(string='选课状态', required=True, default='unselected',
-        selection=[('draft', 'Draft'), ('selected', 'Selected'), ('finished', 'Finished'),
-                   ('unselected', 'Unselected'), ('error', 'Error'), ])
+                selection=[('entrance', 'Entrance'), ('study', 'Study'),
+                           ('graduate', 'Graduate'), ('cancel', 'Cancelled'), ], )
+    state = fields.Selection(string='选课状态', required=True,default='unselected',
+            selection=[('apply', 'Apply'), ('selected', 'Selected'),
+                       ('finished', 'Finished'), ('unselected', 'Unselected'),
+                       ('error', 'Error'), ])
     c_ids = fields.Many2many(
         'laboratory.courses', 'rel_students_courses',
-        'student_id', 'course_id', string="所关联的课程号",
-        help="Analyze your self_information's correctness!",
-        # compute='_compute_course_state',
-    )
-    # 修改学生的 选课状态，如果选课了更改默认的state为'selected',否则依然'unselected'.
+        'student_id', 'course_id', string="已选的课程号",
+        help="Analyze your self_information's correctness!", )
+    # 修改学生的 选课状态。如果没有选课记录，选课状态更改为'unselected'。
 
-    # @api.depends('c_ids', 'state', 'sID')
+    # @api.depends('c_ids')
     # def _compute_course_state(self):
     #     for record in self:
-    #         if record.c_ids:
-    #             record.state = 'unseleted'
+    #         # 没有任何选课信息的 记录(学生)
+    #         if not record.c_ids:
+    #             record.state = 'unselected'
+    #         # 有选课信息，但此时的record.state='' ,因此 state需要重新赋值
+    #         # elif 'apply' in record.state:
+    #         #     record.state = 'apply'
+    #         # elif 'error' in record.state:
+    #         #     record.state = 'error'
+    #         # 如果该学生已经毕业，那默认情况选课信息完成
+    #         elif record.stu_status == 'graduated':
+    #             record.state = 'finished'
     #         else:
-    #             record.state = 'seleted'
+    #             record.state = 'selected'
 
     # 修改学生的 statusBar 阶段状态_入学，攻读，毕业
     def action_stu_status_study(self):
@@ -68,6 +76,16 @@ class Students(models.Model):
 
     def action_stu_status_graduate(self):
         self.stu_status = 'graduate'
+
+    def action_new_course(self):
+        return {
+            'view_mode': 'form',
+            # 'view_id': self.env.ref('laboratory.courses').courseID,
+            'res_model': 'laboratory.courses',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'res_id': False,
+        }
 
     @api.onchange('height_size_min')
     def _onchange_height_size_min(self):
@@ -83,16 +101,13 @@ class Students(models.Model):
         elif self.height_size_max >= 210:
             self.height_size_max = 210
 
-    def move_action(self):
-        self.state = 'selected'
-
 
 class Courses(models.Model):
     _name = 'laboratory.courses'
     _description = 'courses'
     _rec_name = 'courseID'
 
-    courseID = fields.Integer(required=True, string='课程号')
+    courseID = fields.Integer(required=True, string='课程号', default='1000')
     courseName = fields.Char(required=True, string='课程名')
     rel_teacher = fields.Char(required=True, string='任课老师')
     description = fields.Text(string='备注')
@@ -113,9 +128,37 @@ class Courses(models.Model):
         ('cID_uniq', 'unique ("courseID")', "Tag courseID already exists !"),
         ('cName_uniq', 'unique ("courseName")', "Tag courseName already exists !"),
     ]
+    def action_new_stu(self):
+        # if not self.website_id._get_http_domain():
+        #     raise UserError(_("You haven't defined your domain"))
+        return {
+            'type': 'ir.actions.act_url',
+            'url': 'http://localhost:8069/web#model=laboratory.students&menu_id=354',
+            # 'url': 'http://www.google.com/ping?sitemap=%s/sitemap.xml' % self.website_id._get_http_domain(),
+            'target': 'new',
+            # 'target': 'self',
+        }
+        # return {
+        #     # 'name': _("Robots.txt"),
+        #     'view_mode': 'form',
+        #     'res_model': 'laboratory.students',
+        #     'type': 'ir.actions.act_window',
+        #     "views": [[False, "form"]],
+        #     'target': 'new',
+        # }
 
-    def click_action(self):
+    def action_state_apply(self):
+        self.state = 'apply'
+
+    def action_state_open(self):
         self.state = 'open'
+
+    def action_state_done(self):
+        self.state = 'done'
+
+    def action_state_close(self):
+        self.state = 'close'
+
 # class Rel_Students_Courses(models.Model):
 #     _name = 'laboratory.rel_students_courses'
 #     _description = 'Rel_Students_Courses'
