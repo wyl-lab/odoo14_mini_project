@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<!--<record id="action_demo_label" model="ir.actions.act_window">
+			<field name="name">Server tree</field>
+			<field name="res_model">demo.label</fi`eld>
+		</record>-->
+		<record model="ir.ui.view" id="demo_label_form">
+        <field name="name">Label</field>
+        <field name="model">demo.label</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="rec1"/>
+                        <field name="msg1"/>
+                        <field name="msg2"/>
+						<field name="msg3"/>
+                    </group>
+                    <notebook>
+                        <page string="Name">
+                        	<field name="name"/>
+                        </page>
+                    </notebook>
+                </sheet>
+             </form>
+        </field>
+    	</record>
+
+		<record model="ir.ui.view" id="demo_label_tree_view">
+        <field name="name">demo_label_tree_view</field>
+        <field name="model">demo.label</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="rec1"/>
+				<field name="msg1"/>
+				<field name="msg2"/>
+				<field name="msg3"/>
+<!--                <field name="description"/>-->
+            </tree>
+        </field>
+    	</record>
+
+		<record model="ir.actions.server" id="action_demo_label">
+		<field name="name">Label Server</field>
+		<field name="model_id" ref="model_demo_label"/>
+		<field name="state">code</field>
+		<field name="code">
+			action = {
+				"name": "Demo label",
+				"type": "ir.actions.act_window",
+				"view_mode": "tree,form",
+				"res_model": model._name,
+			}
+		</field>
+		</record>
+
+
+		<record id="ir_model_fields_form_view" model="ir.ui.view">
+	        <field name="name">ir.model.fields.form.view</field>
+	        <field name="model">ir.model.fields</field>
+	        <field name="inherit_id" ref="base.view_model_fields_form"/>
+	        <field name="arch" type="xml">
+	            <field name="domain" position="after">
+	                <field name="show_report"/>
+	            </field>
+	        </field>
+	    </record>
+
+		<record id="report_designer_form_view" model="ir.ui.view">
+            <field name="name">report.designer.form.view</field>
+            <field name="model">report.designer</field>
+            <field name="arch" type="xml">
+				<form>
+					<header>
+	                    <button string="设计" type="object" class="oe_highlight" name="do_report_designer"/>
+	                </header>
+					<sheet>
+                    	<field name="image_1920" widget='image' class="oe_avatar" options='{"zoom": true, "preview_image": "image_128"}'/>
+                    	<div class="oe_title">
+                    		<label class="oe_edit_only" for="name"/>
+                        	<h1>
+                        		<field name="name"/>
+                        	</h1>
+                        	<div>
+                        		<div>
+	                                <label for="model"/>
+	                                <field name="model"/>
+	                            </div>
+                        	</div>
+                    	</div>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="report_designer_kanban_view" model="ir.ui.view">
+            <field name="name">report.designer.kanban.view</field>
+            <field name="model">report.designer</field>
+            <field name="arch" type="xml">
+				<kanban>
+                	<field name="id"/>
+					<field name="name"/>
+                	<templates>
+	                    <t t-name="kanban-box">
+	                    	<div class="oe_kanban_global_click">
+                               	<div class="o_kanban_image">
+                               		<img t-att-src="kanban_image('report.designer', 'image_128', record.id.raw_value)"  t-att-alt="record.id.value"/>
+                               	</div>
+	                            <div class="oe_kanban_details">
+	                                <strong>
+	                                    <field name="name"/>
+	                                </strong>
+	                                <div>
+	                                	<strong>
+		                                    <field name="model"/>
+		                                </strong>
+	                                </div>
+	                                <button type="object" name="do_report_designer" class="btn btn-primary" style="float: right">设计</button>
+	                            </div>
+                            </div>
+	                    </t>
+                    </templates>
+                </kanban>
+			</field>
+		</record>
+		
+		<record id="action_report_designer" model="ir.actions.act_window">
+	         <field name="name">标签设计</field>
+	         <field name="res_model">report.designer</field>
+			 <field name="domain">[]</field>
+	         <field name="view_mode">kanban,form</field>
+	         <field name="help" type="html">
+             	<p class="oe_view_nocontent_create">
+                	创建一个自定义标签
+              	</p>
+            </field>
+	    </record>
+	    
+
+		<record id="action_report_designer_client" model="ir.actions.client">
+            <field name="name">报表设计</field>
+            <field name="tag">report_designer</field>
+        </record>
+
+		<!-- Top menu item -->
+		<!-- menu categories -->
+		<menuitem action="action_demo_label" id="menu_action_demo_mnt" name="报表演示" sequence="400" parent="menu_report_designer_root"/>
+		<menuitem action="action_report_designer" id="menu_report_designer_root" name="标签设计" sequence="300" web_icon="web_report_designer,static/description/icon.png" groups="base.group_system"/>
+
+		<!--	演示	-->
+
+<!--		<record id="demo_label_tree_view" model="ir.ui.view">
+            <field name="name">demo.label.tree.view</field>
+            <field name="model">demo.label</field>
+            <field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="msg1"/>
+					<field name="msg2"/>
+					<field name="msg3"/>
+					<field name="msg4"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="demo_label_form_view" model="ir.ui.view">
+            <field name="name">demo.label.form.view</field>
+            <field name="model">demo.label</field>
+            <field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="msg1"/>
+							<field name="msg2"/>
+							<field name="msg3"/>
+							<field name="msg4"/>
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_demo_label" model="ir.actions.act_window">
+	         <field name="name">报表演示</field>
+	         <field name="res_model">demo.label</field>
+			 <field name="domain">[]</field>
+	         <field name="view_mode">tree,form</field>
+	         <field name="help" type="html">
+             	<p class="oe_view_nocontent_create">
+                	创建一个报表演示
+              	</p>
+            </field>
+	    </record>
+
+		<menuitem action="action_demo_label" id="menu_action_demo_mnt" name="报表演示" sequence="400"/>-->
+	</data>
+</odoo>
+	

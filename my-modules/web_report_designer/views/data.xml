@@ -1,0 +1,26 @@
+<odoo>
+    <data noupdate="0">
+<!--        <record id="m1" model="report.label">-->
+<!--            <field name="name">material_1</field>-->
+<!--            <field name="model">领料单</field>-->
+<!--        </record>-->
+<!--        <record id="m2" model="report.label">-->
+<!--            <field name="name">material_2</field>-->
+<!--            <field name="model">领料单</field>-->
+<!--        </record>-->
+<!--        <record id="m3" model="report.label">-->
+<!--            <field name="name">material_3</field>-->
+<!--            <field name="model">领料单</field>-->
+<!--        </record>-->
+
+
+<!--        <record id="m_o_1" model="report.designer">-->
+<!--            <field name="name">material_out_1</field>-->
+<!--            <field name="model">出料单</field>-->
+<!--        </record>-->
+<!--        <record id="m_o_2" model="report.designer">-->
+<!--            <field name="name">material_out_2</field>-->
+<!--            <field name="model">出料单</field>-->
+<!--        </record>-->
+    </data>
+</odoo>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+    	<template id="assets_backend" name="web_report_designer assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_report_designer/static/src/js/web_report_designer.js"></script>
+            </xpath>
+        </template>
+		<template id="designer_index" name="Designer">
+			&lt;!DOCTYPE html&gt;
+			<html lang="en">
+				<head>
+				    <title>报表设计</title>
+				    <meta charset="utf-8"/>
+				    <link href="/web_report_designer/static/js/demos/base.css" rel="stylesheet" type="text/css"/>
+				    <link href="/web_report_designer/static/js/dist/ext/spectrum.css" rel="stylesheet" type="text/css"/>
+				    <link href="/web_report_designer/static/js/dist/reportbro.css" rel="stylesheet" type="text/css"/>
+				    <script src="/web_report_designer/static/js/dist/ext/jquery.js"></script>
+				    <script src="/web_report_designer/static/js/dist/ext/autosize.js"></script>
+				    <script src="/web_report_designer/static/js/dist/ext/JsBarcode.all.min.js"></script>
+					<script src="/web_report_designer/static/js/dist/ext/jquery.qrcode.min.js"></script>
+				    <script src="/web_report_designer/static/js/dist/ext/spectrum.js"></script>
+				    <script src="/web_report_designer/static/js/dist/reportbro.js"></script>
+				
+				    <script type="text/javascript">
+				    	$(document).ready(function() {
+				    		var report = $('#report_info_data').text().replace(/True/g,'true');
+				    		var report = report.replace(/False/g,'false');
+				    		var report = eval("("+report+")");
+						    var rb = $('#reportyun').reportBro({
+								localStorageReportKey: 'devilSpace',
+						        reportServerUrl: '/report/put',
+						        menuShowButtonLabels: true,
+						    });
+						    $('#reportyun').reportBro('load', report);
+						});
+				    </script>
+				</head>
+			    <body>
+			    	<div id="report_info" style="display: none">
+			    		<span id="report_info_model"><t t-raw="model"/></span>
+			    		<span id="report_info_model_ids"><t t-raw="model_ids"/></span>
+			    		<span id="report_info_data"><t t-raw="data"/></span>
+			    	</div>
+			        <div id="reportyun"></div>
+			    </body>
+			</html>
+		</template>
+		<template id="designer_preview" name="Preview">
+			&lt;!DOCTYPE html&gt;
+			<html lang="en">
+				<head>
+				    <title>标签打印</title>
+				    <meta charset="utf-8"/>
+				    <link href="/web_report_designer/static/js/demos/base.css" rel="stylesheet" type="text/css"/>
+				    <link href="/web_report_designer/static/js/dist/ext/spectrum.css" rel="stylesheet" type="text/css"/>
+				    <link href="/web_report_designer/static/js/dist/reportbro.css" rel="stylesheet" type="text/css"/>
+				    <script src="/web_report_designer/static/js/dist/ext/jquery.js"></script>
+				    <script src="/web_report_designer/static/js/dist/ext/autosize.js"></script>
+				    <script src="/web_report_designer/static/js/dist/ext/JsBarcode.all.min.js"></script>
+					<script src="/web_report_designer/static/js/dist/ext/jquery.qrcode.min.js"></script>
+				    <script src="/web_report_designer/static/js/dist/ext/spectrum.js"></script>
+				    <script src="/web_report_designer/static/js/dist/reportbro.js"></script>
+				
+				    <script type="text/javascript">
+				    	$(document).ready(function() {
+				    		var report = $('#report_info_data').text().replace(/True/g,'true');
+				    		var report = report.replace(/False/g,'false');
+				    		var report = eval("("+report+")");
+				    		var parameters = $('#report_info_parameters').text().replace(/True/g,'true');
+				    		var parameters = parameters.replace(/False/g,'false');
+				    		var parameters = eval("("+parameters+")");
+				    		var designer_id = $('#report_info_designer_id').text();
+				    		var info = {
+			                    report: report,
+			                    outputFormat: 'pdf',
+			                    data: parameters,
+			                    isTestData: true,
+			                    designer_id: designer_id,
+			                }
+						    $.ajax('/report/put', {
+				                data: {'info': JSON.stringify(info)},
+				                type: "POST",
+				                timeout: 20000,
+				                cache : false,
+                    			async : false,
+				                success: function success(data) {
+				                    var pdfPrefix = 'data:application/pdf';
+				                    if (data.substr(0, 4) === 'key:') {
+				                        window.location.href = '/report/get?key=' + data.substr(4) + '&amp;outputFormat=pdf'; 
+				                    } else {
+				                        try {
+				                            var obj = JSON.parse(data);
+				                            if (obj.errors.length > 0) {
+				                            	var el = '<div>' + obj.errors + obj.report_url + '</div>';
+				                                $('#reportyun').append(el);
+				                            }
+				                        } catch (e) {
+				                            alert('标签打印失败，请联系客服');
+				                        }
+				                    }
+				                },
+				            });
+						});
+				    </script>
+				</head>
+			    <body>
+			    	<div id="report_info" style="display: none">
+			    		<span id="report_info_model"><t t-raw="model"/></span>
+			    		<span id="report_info_model_ids"><t t-raw="model_ids"/></span>
+			    		<span id="report_info_data"><t t-raw="data"/></span>
+			    		<span id="report_info_parameters"><t t-raw="parameters"/></span>
+			    		<span id="report_info_designer_id"><t t-raw="designer_id"/></span>
+			    	</div>
+			        <div id="reportyun"></div>
+			    </body>
+			</html>
+		</template>
+    </data>
+</odoo>

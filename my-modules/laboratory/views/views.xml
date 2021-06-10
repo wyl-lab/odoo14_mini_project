@@ -34,7 +34,7 @@
       <field name="res_model">laboratory.students</field>
       <field name="view_mode">tree,form</field>
     </record>-->
-    <record model="ir.actions.server" id="laboratory.action_server_students">
+    <record model="ir.actions.server" id="action_server_lab_students">
         <field name="name">students server</field>
         <field name="model_id" ref="laboratory.model_laboratory_students"/>
         <field name="state">code</field>
@@ -47,7 +47,7 @@
         }
         </field>
     </record>
-    <record model="ir.ui.view" id="laboratory.student_tree">
+    <record model="ir.ui.view" id="lab_student_tree">
         <field name="name">Students</field>
         <field name="model">laboratory.students</field>
         <field name="arch" type="xml">
@@ -69,7 +69,7 @@
             </tree>
         </field>
     </record>
-    <record model="ir.ui.view" id="laboratory.student_form">
+    <record model="ir.ui.view" id="lab_student_form">
         <field name="name">Students</field>
         <field name="model">laboratory.students</field>
         <field name="arch" type="xml">
@@ -121,9 +121,7 @@
         </field>
     </record>
 
-
-
-    <record model="ir.actions.server" id="laboratory.action_server_courses">
+    <record model="ir.actions.server" id="action_server_lab_courses">
       <field name="name">course server</field>
       <field name="model_id" ref="laboratory.model_laboratory_courses"/>
       <field name="state">code</field>
@@ -230,11 +228,11 @@
 
     <!-- actions -->
     <menuitem name="Students" id="laboratory.menu_1_list" parent="laboratory.menu_1"
-              action="laboratory.action_server_students"/>
+              action="action_server_lab_students"/>
     <menuitem name="Courses" id="laboratory" parent="laboratory.menu_1"
-              action="laboratory.action_server_courses"/>
+              action="action_server_lab_courses"/>
 
     <menuitem name="Courses" id="test1" parent="laboratory.menu_2"
-              action="laboratory.action_server_courses"/>
+              action="action_server_lab_courses"/>
   </data>
 </odoo>

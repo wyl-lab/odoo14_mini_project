@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_report_designer,Report Designer,model_report_designer,base.group_user,1,1,1,1
+access_report_generate,Report Generate,model_report_generate,base.group_user,1,1,1,1
+access_report_designer_sort,Report Designer Sort,model_report_designer_sort,base.group_user,1,1,1,1
+access_demo_label,Demo Label,model_demo_label,base.group_user,1,1,1,1
