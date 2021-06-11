@@ -52,6 +52,9 @@
 /* /account/static/src/scss/variables.scss defined in bundle 'web.assets_frontend' */
  @keyframes animate-red{0%{color: red;}100%{color: inherit;}}.animate{animation: animate-red 1s ease;}
 
+/* /hr_org_chart/static/src/scss/variables.scss defined in bundle 'web.assets_frontend' */
+ 
+
 /* /website/static/src/scss/secondary_variables.scss defined in bundle 'web.assets_frontend' */
  
 

@@ -34,6 +34,68 @@
       <field name="res_model">laboratory.students</field>
       <field name="view_mode">tree,form</field>
     </record>-->
+
+<!--    Print-->
+    <!-- <record id="action_lab_information" model="ir.actions.report">
+        <field name="name">Report_PDF</field>
+        <field name="model">laboratory.students</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_holidays</field>
+        <field name="report_file">hr_holidays.report_holidayssummary</field>
+    </record>-->
+<!--    print of button link-->
+    <record id="lab_student_print_badge" model="ir.actions.report">
+        <field name="name">Print Badge</field>
+        <field name="model">laboratory.students</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">laboratory.print_student_badge</field>
+        <field name="report_file">laboratory.print_student_badge</field>
+        <field name="print_report_name">'Print Badge - %s' % (object.sName).replace('/', '')</field>
+        <field name="binding_model_id" ref="model_laboratory_students"/>
+        <field name="binding_type">report</field>
+    </record>
+<!--     print button (on new form) define by myself, via special need.-->
+    <record id="lab_action_print_students" model="ir.actions.report">
+        <field name="name">By Form</field>
+        <field name="model">laboratory.students</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">laboratory.report_studentsrecords</field>
+        <field name="report_file">laboratory.report_studentsrecords</field>
+        <field name="attachment_use" eval="True"/>
+        <field name="attachment">(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')</field>
+        <field name="binding_model_id" ref="model_laboratory_students"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="action_newForm_print" model="ir.actions.act_window">
+        <field name="name">act_window</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">report.laboratory.report_studentsrecords</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="laboratory.model_laboratory_students"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="view_print_newForm" model="ir.ui.view">
+        <field name="name">laboratory.students.form</field>
+        <field name="model">laboratory.students</field>
+        <field name="arch" type="xml">
+            <form string="Summary">
+                <group col="4" colspan="6">
+                    <field name="sID"/>
+                    <newline/>
+                    <field name="sName"/>
+                    <newline/>
+                    <field name="sSex" invisible="True"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print_Stu" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" spwizardecial="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
     <record model="ir.actions.server" id="action_server_lab_students">
         <field name="name">students server</field>
         <field name="model_id" ref="laboratory.model_laboratory_students"/>
@@ -93,7 +155,8 @@
                             <field name="sName"/>
                             <field name="sSex"/>
                             <field name="sRegistDate" default_period="last_year" string="入校时间"/>
-                            <button name="action_new_course" string="move_course" type="object" class="btn-primary o_button_generate_leads"/>
+<!--                            <button name="action_new_course" string="move_course" type="object" class="btn-primary o_button_generate_leads"/>-->
+                            <button name="%(lab_student_print_badge)d" string="Print Badge" class="btn btn-link" type="action"/>
                         </group>
                         <group>
 <!--                            <field name="state" widget="badge" optional="show" decoration-info="state == 'apply'" decoration-success="state == 'finished'" decoration-warning="state == 'unselected'" decoration-danger="state == 'error'"/>-->

@@ -10,6 +10,6 @@ Hides the attendance presence button when an employee is on leave.
     'depends': ['hr_attendance', 'hr_holidays'],
     'auto_install': True,
     'data': [
-        'views/hr_employee_views.xml',
+        'views/lab_students_views.xml',
     ],
 }

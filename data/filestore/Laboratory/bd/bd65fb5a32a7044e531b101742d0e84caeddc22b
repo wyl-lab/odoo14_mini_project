@@ -23,8 +23,35 @@
 /* /portal/static/src/scss/primary_variables.scss defined in bundle 'web.report_assets_common' */
  
 
+/* /website/static/src/scss/primary_variables.scss defined in bundle 'web.report_assets_common' */
+ 
+
+/* /website/static/src/scss/options/user_values.scss defined in bundle 'web.report_assets_common' */
+ 
+
+/* /website/static/src/scss/options/colors/user_color_palette.scss defined in bundle 'web.report_assets_common' */
+ 
+
+/* /website/static/src/scss/options/colors/user_theme_color_palette.scss defined in bundle 'web.report_assets_common' */
+ 
+
+/* /website/static/src/snippets/s_badge/000_variables.scss defined in bundle 'web.report_assets_common' */
+ 
+
+/* /website/static/src/snippets/s_product_list/000_variables.scss defined in bundle 'web.report_assets_common' */
+ 
+
+/* /website_sale/static/src/scss/primary_variables.scss defined in bundle 'web.report_assets_common' */
+ 
+
 /* /account/static/src/scss/variables.scss defined in bundle 'web.report_assets_common' */
  @keyframes animate-red{0%{color: red;}100%{color: inherit;}}.animate{animation: animate-red 1s ease;}
+
+/* /hr_org_chart/static/src/scss/variables.scss defined in bundle 'web.report_assets_common' */
+ 
+
+/* /website/static/src/scss/secondary_variables.scss defined in bundle 'web.report_assets_common' */
+ 
 
 /* /web_editor/static/src/scss/secondary_variables.scss defined in bundle 'web.report_assets_common' */
  
@@ -69,7 +96,7 @@
  .o_clean_footer, .o_clean_header, .o_report_layout_clean{color: #000;}.o_clean_header img{max-height: 90px; max-width: 300px;}.o_clean_footer{margin: 0 3px; margin-top: 200px; border-top: 3px solid black;}.o_clean_footer h4{color: black; font-weight: bolder;}.o_clean_footer .pagenumber{border: 3px solid black; background-color: black; color: white; padding: 4px 8px; text-align: center;}.o_report_layout_clean{}.o_report_layout_clean h1, .o_report_layout_clean h2, .o_report_layout_clean h3{color: black; font-weight: bolder;}.o_report_layout_clean strong{color: black;}.o_report_layout_clean table.o_main_table{margin-bottom: 0;}.o_report_layout_clean table thead{color: black;}.o_report_layout_clean table thead tr th{border-top: 3px solid black !important; text-transform: uppercase;}.o_report_layout_clean table thead tr th:first-child{width: 48%;}.o_report_layout_clean table tbody{color: #000;}.o_report_layout_clean table tbody tr:first-child td{border-top: none;}.o_report_layout_clean table tbody tr:last-child td{border-bottom: 3px solid black;}.o_report_layout_clean table tbody tr td{padding: 15px 5px;}.o_report_layout_clean #total strong{color: black;}.o_report_layout_clean .row:not(#total) > div:has(table){top: -16px;}.o_report_layout_clean .row > div > table tr:first-child td, .o_report_layout_clean .row > div > table tr.o_subtotal, .o_report_layout_clean div#total table tr:first-child td, .o_report_layout_clean div#total table tr.o_subtotal{border-top: none !important;}.o_report_layout_clean .row > div > table tr:last-child td, .o_report_layout_clean .row > div > table tr.o_total, .o_report_layout_clean div#total table tr:last-child td, .o_report_layout_clean div#total table tr.o_total{border-top: 1px solid #e9ecef !important;}
 
 /* /web/static/src/scss/asset_styles_company_report.scss defined in bundle 'web.report_assets_common' */
- .o_company_1_layout{font-family: 'Lato';}.o_company_1_layout.o_report_layout_standard h2{color: black;}.o_company_1_layout.o_report_layout_standard #informations strong{color: black;}.o_company_1_layout.o_report_layout_standard #total strong{color: black;}.o_company_1_layout.o_report_layout_standard table thead{color: black;}
+ .o_company_2_layout{font-family: 'Lato';}.o_company_2_layout.o_report_layout_standard h2{color: black;}.o_company_2_layout.o_report_layout_standard #informations strong{color: black;}.o_company_2_layout.o_report_layout_standard #total strong{color: black;}.o_company_2_layout.o_report_layout_standard table thead{color: black;}.o_company_1_layout{font-family: 'Lato';}.o_company_1_layout.o_report_layout_standard h2{color: #555555;}.o_company_1_layout.o_report_layout_standard #informations strong{color: #000000;}.o_company_1_layout.o_report_layout_standard #total strong{color: #555555;}.o_company_1_layout.o_report_layout_standard table thead{color: #000000;}
 
 /* /sale/static/src/scss/sale_report.scss defined in bundle 'web.report_assets_common' */
  .sale_tbody .o_line_note{word-break: break-word;}

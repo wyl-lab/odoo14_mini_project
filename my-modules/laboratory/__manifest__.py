@@ -21,7 +21,9 @@
     'application': True,
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'web', 'mail', 'sale', 'calendar'],
+    'depends': ['base', 'web', 'mail',
+                'sale', 'calendar', 'base_setup',
+                'resource', ],
 
     # always loaded
     'data': [
@@ -29,6 +31,8 @@
         'views/views.xml',
         'views/templates.xml',
         'views/data.xml',
+        'report/lab_report_template.xml',
+        'report/lab_student_badge.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

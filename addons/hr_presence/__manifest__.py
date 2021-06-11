@@ -21,7 +21,7 @@ Allows to contact directly the employee in case of unjustified absence.
         'security/sms_security.xml',
         'security/ir.model.access.csv',
         'data/ir_actions_server.xml',
-        'views/hr_employee_views.xml',
+        'views/lab_students_views.xml',
         'data/sms_data.xml',
         'data/mail_data.xml',
     ],

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="lab_student_print_badge" model="ir.actions.report">
+        <field name="name">Print Badge</field>
+        <field name="model">laboratory.students</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">laboratory.print_student_badge</field>
+        <field name="report_file">laboratory.print_student_badge</field>
+        <field name="print_report_name">'Print Badge - %s' % (object.sName).replace('/', '')</field>
+        <field name="binding_model_id" ref="model_laboratory_students"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="print_student_badge">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="student">
+                    <div class="col-md-6">
+                        <table style="width:243pt; height:153pt; border: 1pt solid black; border-collapse:separate; border-radius:8pt; margin:5pt">
+                            <td style="width:67%" valign="center">
+                                <table style="width:155pt; height:85pt">
+                                    <tr><th><div style="font-size:15pt; margin-bottom:0pt;margin-top:0pt;" align="center"><t t-esc="student.sName"/></div></th></tr>
+                                    <tr><td><div align="center" style="font-size:10pt;margin-bottom:5pt;"><t t-esc="student.sID"/></div></td></tr>
+                                </table>
+                            </td>
+                        </table>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>
