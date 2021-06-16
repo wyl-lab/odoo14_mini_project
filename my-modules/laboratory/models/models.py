@@ -23,60 +23,6 @@ from odoo import api, fields, models, _
 #         return True
 
 
-class LabReport(models.AbstractModel):
-    _name = 'report.laboratory.report_studentsrecords'
-    _description = 'Lab Students Report'
-
-    sID = fields.Char()
-    sName = fields.Char()
-    sSex = fields.Char()
-    def _get_data_from_report(self, data):
-        res = []
-        Students = self.env['laboratory.students']
-        res.append(Students.search())
-        # if 'sID' in data:
-        #     res.append({'data': [
-        #         self._get_leaves_summary(data['date_from'], stu.id, data['holiday_type'])
-        #         for sID in Students.browse(data['sID'])
-        #     ]})
-        return res
-
-    def print_report(self):
-        self.ensure_one()
-        [data] = self.read()
-        data['sID'] = self.env.context.get('sID_ids', [])
-        students = self.env['laboratory.students'].browse(data['sID'])
-        datas = {
-            'ids': [],
-            'model': 'laboratory.students',
-            'form': data,
-        }
-        return self.env.ref('laboratory.report_studentsrecords').report_action(students, data=datas)
-
-    def _get_students_status(self):
-        res = []
-        for stu in self.env['laboratory.students'].search([]):
-            res.append({'id': stu.sID, 'name': stu.sName})
-        return res
-
-    def _get_report_values(self, docids, data=None):
-        if not data.get('form'):
-            raise UserError(_("Form content is missing, this report cannot be printed."))
-
-        # get the report action back as we will need its data
-        students_report = self.env['ir.actions.report']._get_report_from_name('laboratory.report_studentsrecords')
-        # get the records selected for this rendering of the report
-        obj = self.env[students_report.model].browse(docids)
-        # return a custom rendering context
-        return {
-            # 'lines': docids.get_lines()
-            # 'doc_ids': self.ids,
-            'doc_model': students_report.model,
-            # 'get_data_from_report': self._get_data_from_report(data['form']),
-            'get_students_status': self._get_students_status(),
-        }
-
-
 class Students(models.Model):
     _name = 'laboratory.students'
     _description = 'students'
@@ -183,6 +129,7 @@ class Courses(models.Model):
         ('cID_uniq', 'unique ("courseID")', "Tag courseID already exists !"),
         ('cName_uniq', 'unique ("courseName")', "Tag courseName already exists !"),
     ]
+
     def action_new_stu(self):
         # if not self.website_id._get_http_domain():
         #     raise UserError(_("You haven't defined your domain"))
@@ -214,16 +161,6 @@ class Courses(models.Model):
     def action_state_close(self):
         self.state = 'close'
 
-# class Rel_Students_Courses(models.Model):
-#     _name = 'laboratory.rel_students_courses'
-#     _description = 'Rel_Students_Courses'
-#
-#     sID = fields.Char(required=True, string='学生号')
-#     courseID = fields.Integer(required=True, string='课程号')
-#     description = fields.Text(string='备注')
-#     rel_sIDs = fields.Many2one('laboratory.students', 'sID', string="rel_sIDs")
-#     rel_tIDs = fields.Many2one('laboratory.courses', 'tID', string="rel_tIDs")
-
 
 # class Teachers(models.Model):
 #     _name = 'laboratory.teachers'
@@ -233,15 +170,3 @@ class Courses(models.Model):
 #     tName = fields.Char(required=True, string='課程名')
 #     description = fields.Text(string='備注')
 #     s_ids = fields.One2many('laboratory.students', 'sID', string="s_ids")
-
-
-# class TestAction(models.Model):
-#     _name = "test.action"
-#     _description = "Test.Model"
-#
-#     name = fields.Char(required=True)
-#
-#     def action_do_something(self):
-#         for record in self:
-#             record.name = "Something"
-#         return True

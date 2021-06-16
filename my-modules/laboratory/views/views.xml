@@ -43,7 +43,7 @@
         <field name="report_name">hr_holidays</field>
         <field name="report_file">hr_holidays.report_holidayssummary</field>
     </record>-->
-<!--    print of button link-->
+<!--    print of button link（徽章模板样式）-->
     <record id="lab_student_print_badge" model="ir.actions.report">
         <field name="name">Print Badge</field>
         <field name="model">laboratory.students</field>
@@ -54,27 +54,29 @@
         <field name="binding_model_id" ref="model_laboratory_students"/>
         <field name="binding_type">report</field>
     </record>
-<!--     print button (on new form) define by myself, via special need.-->
+
+<!--     print button (on new form 新窗体——选择输出的信息) define by myself, via special need.-->
     <record id="lab_action_print_students" model="ir.actions.report">
         <field name="name">By Form</field>
         <field name="model">laboratory.students</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">laboratory.report_studentsrecords</field>
-        <field name="report_file">laboratory.report_studentsrecords</field>
+        <field name="report_name">laboratory.report.studentsrecords</field>
+        <field name="report_file">laboratory.report.studentsrecords</field>
         <field name="attachment_use" eval="True"/>
         <field name="attachment">(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')</field>
-        <field name="binding_model_id" ref="model_laboratory_students"/>
+        <field name="binding_model_id" ref="model_laboratory_report_studentsrecords"/>
         <field name="binding_type">report</field>
     </record>
     <record id="action_newForm_print" model="ir.actions.act_window">
         <field name="name">act_window</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">report.laboratory.report_studentsrecords</field>
+        <field name="res_model">laboratory.report_studentsrecords</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="binding_model_id" ref="laboratory.model_laboratory_students"/>
+        <field name="binding_model_id" ref="laboratory.model_laboratory_report_studentsrecords"/>
         <field name="binding_type">report</field>
     </record>
+
     <record id="view_print_newForm" model="ir.ui.view">
         <field name="name">laboratory.students.form</field>
         <field name="model">laboratory.students</field>
